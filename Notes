@@ -8,3 +8,33 @@ features {}
 subscription-id = "xxx"
 client-id = "xxxxx"
 client-secret = "xxxxx"
+
+Resources: Each resource block describes one or more infrastrcture objects,such as virtual networks,compute instances,databases, storage buckets.
+resource "azurerm-rc group"
+name = "nextopsrgterraform"
+location = "westus"
+
+variables: using variables in terraform configurations makes our deployement more dynamic. A seperate file name with "variables.tf" needs to be created in to the working directory
+to store all variables for our used in main.tf configuration file.
+
+variable "system" {
+    type = string 
+    description = "name of the system or environment"
+
+Statefile: After the deployment is finished terraform creates a state file to keep track of current state of the infrastrcture.
+           it will use this file to compare when deploy or destroy resources, in other words its compare the current state with desired state using this file.
+     A file with a name of "terraform.tfstate" willbe created in your working directory.
+
+Provisioners: Provisioners provide the ability to run additional steps or tasks when a resource is created or destroyed.
+
+            this is not a replacement for configuration management tools.
+provisioner "file" {
+   source = "/script.psl"
+   destination = "c: /tmp/setup.psl"
+connection {
+    type = "winrm"
+    user = "administrator"
+    password = "welcome123"
+    host = "server1"
+}
+}
